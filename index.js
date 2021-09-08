@@ -19,11 +19,11 @@ client.on('message', async msg => {
     }
 
     if (msg.content.startsWith("!hello")) {
-        msg.reply("sup shawtie!")
+        await msg.reply("sup shawtie!")
     }
 
     if (msg.content.startsWith("!amazonbot")) {
-        msg.reply("Usage: type !link 'offerID' 'item name (ps5/xbox)' to generate a webhook! \n \n Example: !link xaGCEPEvnmB1L0Xx288%2BXNRVr%2FFRe6YG4q54%2BI5twBPnxFkVPr%2FMmkTcV6YOi3PRbRFRnEvCNs8J%2Bkj45GFp4ynMiGdIvZl%2FgGFPD5HaBz8Gy8mg%2BPIfzNbxmfxnBLu%2BSY2GzPvd6CRXHc%2FDHydI6Q%3D%3D ps5")
+        await msg.reply("Usage: type !link 'offerID' 'item name (ps5/xbox)' to generate a webhook! \n \n Example: !link xaGCEPEvnmB1L0Xx288%2BXNRVr%2FFRe6YG4q54%2BI5twBPnxFkVPr%2FMmkTcV6YOi3PRbRFRnEvCNs8J%2Bkj45GFp4ynMiGdIvZl%2FgGFPD5HaBz8Gy8mg%2BPIfzNbxmfxnBLu%2BSY2GzPvd6CRXHc%2FDHydI6Q%3D%3D ps5")
     }
 
     // Check if the message starts with '!hello' and respond with 'world!' if it does.
@@ -51,7 +51,7 @@ client.on('message', async msg => {
             .setImage(prodImg)
             .setFooter('L&W Associates')
             .setTimestamp();
-        msg.reply(embed);
+        await msg.reply(embed);
     }
 
     if(msg.content.startsWith("!sku")){
@@ -62,12 +62,13 @@ client.on('message', async msg => {
 
         const webdriver = require('selenium-webdriver'), By = webdriver.By, until = webdriver.until;
         const driver = new webdriver.Builder().forBrowser('chrome').build();
-        driver.get(prodLink);
-        let offerID = driver.wait(until.elementLocated(By.id('offerListingID')), 20000);
-        console.log("Hello")
-        //console.log(offerID.getAttribute("value"));
-
-
+        await driver.get(prodLink);
+        //const offerID = await driver.findElement(By.id("offerListingID"));
+        //const offerID = await document.getElementById("offerListingID");
+        const offerID = await driver.executeScript('document.getElementById("offerListingID").getAttribute("value");');
+        //await console.log("Hello")
+        await console.log(offerID);
+        // await console.log(offerID.getAttribute("value"));
     }
 });
 
